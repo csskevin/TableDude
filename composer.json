@@ -1,0 +1,17 @@
+{
+    "name": "csskevin/tabledude",
+    "description": "Helps you processing HTML Tables with PHP to save them for instance as associative arrays.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin Saiger",
+            "email": "saigerkevin4@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^8.4@dev"
+    }
+}
