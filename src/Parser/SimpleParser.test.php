@@ -3,7 +3,7 @@
 require("SimpleParser.php");
 
 use PHPUnit\Framework\TestCase;
-class FirstTest extends TestCase
+class SimpleParserTest extends TestCase
 {
     public function testMultipleTables()
     {
