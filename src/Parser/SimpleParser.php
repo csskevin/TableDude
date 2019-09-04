@@ -16,7 +16,7 @@ class SimpleParser
     public function parseHTMLTables()
     {
         $this->doc = new \DOMDocument();
-        $this->doc->loadHTML($this->html);
+        @$this->doc->loadHTML($this->html);
         $this->xpath = new \DOMXpath($this->doc);
         $tables = $this->xpath->query("//table");
         $parsedTables = array();
