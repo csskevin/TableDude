@@ -1,6 +1,7 @@
 <?php
 
 namespace TableDude\Converter;
+require __DIR__ . "/../Exceptions/HorizontalTableException.php";
 
 class HorizontalTable
 {
@@ -13,7 +14,7 @@ class HorizontalTable
         {
             $this->table = $table;
         } else {
-            throw new \Exception("Table is not of type array!");
+            throw new TableDude\Exceptions\HorizontalTableException("Table does not match type Array!");
         }
     }
 
@@ -80,12 +81,12 @@ class HorizontalTable
             }
             else
             {
-                throw new \Exception("Sliced Header is not length 1");
+                throw new TableDude\Exceptions\HorizontalTableException("Sliced element does not equal lenght 1");
             }
         } 
         else 
         {
-            throw new \Exception("Header Row index out of range!");
+            throw new TableDude\Exceptions\HorizontalTableException("Array out of range!");
         }
     }
 
@@ -104,7 +105,7 @@ class HorizontalTable
             }
             $this->table[$headerIndex] = $extendedHeader;
         } else {
-            throw new \Exception("Header Row index out of range!");
+            throw new TableDude\Exceptions\HorizontalTableException("Array out of range!");
         }
     }
 }
