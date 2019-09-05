@@ -41,7 +41,6 @@ class VerticalTable
     {
         $swappedTable = array();
         $longestRowLength = $this->countLongestRow();
-        print_r($longestRowLength);
         for($i = 0; $i < count($this->table); $i++)
         {
             for($j = 0; $j < $longestRowLength; $j++)
