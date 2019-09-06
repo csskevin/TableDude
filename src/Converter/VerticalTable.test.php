@@ -1,7 +1,6 @@
 <?php
 
-namespace TableDude\Converter;
-require __DIR__ . "/VerticalTable.php";
+include_once __DIR__ . "/VerticalTable.php";
 
 use PHPUnit\Framework\TestCase;
 
@@ -111,111 +110,6 @@ class VerticalTableTest extends TestCase
         $verticalTable->setHeaderColumnIndex(0);
         $groupedTable = $verticalTable->getGroupedTable();
         $this->assertEquals($expected, $groupedTable);
-    }
-
-    public function testSwapArray()
-    {
-        $array = array(
-            array(
-                "Value1",
-                "Value2",
-                "Value3"
-            ),
-            array(
-                "Value4",
-                "Value5",
-                "Value6"
-            ),
-            array(
-                "Value7",
-                "Value8",
-                "Value9"
-            )
-        );
-        $verticalTable = new \TableDude\Converter\VerticalTable($array);
-        $expected = array(
-            array(
-                "Value1",
-                "Value4",
-                "Value7"
-            ),
-            array(
-                "Value2",
-                "Value5",
-                "Value8"
-            ),
-            array(
-                "Value3",
-                "Value6",
-                "Value9"
-            )
-        );
-        $swappedArray = $verticalTable->swapArray();
-        $this->assertEquals($expected, $swappedArray);
-
-        $array2 = array(
-            array(
-                "Value1",
-                "Value3"
-            ),
-            array(
-                "Value4",
-                "Value5",
-                "Value6"
-            ),
-            array(
-                "Value7",
-                "Value8",
-                "Value9"
-            )
-        );
-        $verticalTable2 = new \TableDude\Converter\VerticalTable($array2);
-        $expected2 = array(
-            array(
-                "Value1",
-                "Value4",
-                "Value7"
-            ),
-            array(
-                "Value3",
-                "Value5",
-                "Value8"
-            ),
-            array(
-                "",
-                "Value6",
-                "Value9"
-            )
-        );
-        $swappedArray2 = $verticalTable2->swapArray();
-        $this->assertEquals($expected2, $swappedArray2);
-    }
-
-    public function testCountLongestRow()
-    {
-        $array = array(
-            array(
-                "Value1",
-                "Value2",
-                "Value3",
-                "Val4"
-            ),
-            array(
-                "Value5",
-                "Value6"
-            ),
-            array(
-                "Value7",
-            ),
-            array(
-                "Value13",
-                "Value21",
-                "Value32",
-                "Val7"
-            )
-        );
-        $verticalTable = new \TableDude\Converter\VerticalTable($array);
-        $this->assertEquals($verticalTable->countLongestRow(), 4);
     }
 }
 

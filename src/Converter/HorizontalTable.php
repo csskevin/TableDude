@@ -1,12 +1,13 @@
 <?php
 
 namespace TableDude\Converter;
-require __DIR__ . "/../Exceptions/HorizontalTableException.php";
+include_once __DIR__ . "/../Exceptions/HorizontalTableException.php";
+include_once __DIR__ . "/../Tools/ArrayTool.php";
 
 class HorizontalTable
 {
     private $table;
-    private $headerRowIndex;
+    private $headerRowIndex = 0;
 
     public function __construct($table)
     {
@@ -94,19 +95,8 @@ class HorizontalTable
     {
         $header = $this->getHeader();
         $extendedHeader = array_merge($header, $extend);
-        if(count($this->table) > $this->headerRowIndex && count($this->table) >= ($this->headerRowIndex * -1))
-        {
-            $headerIndex = 0;
-            if($this->headerRowIndex >= 0)
-            {
-                $headerIndex = $this->headerRowIndex;
-            } else {
-                $headerIndex = count($this->table) + $this->headerRowIndex;
-            }
-            $this->table[$headerIndex] = $extendedHeader;
-        } else {
-            throw new TableDude\Exceptions\HorizontalTableException("Array out of range!");
-        }
+        $realIndex = \TableDude\Tools\ArrayTool::getRealIndexFromHorizontalTable($this->table, $this->headerRowIndex);
+        $this->table[$realIndex] = $extendedHeader;
     }
 }
 

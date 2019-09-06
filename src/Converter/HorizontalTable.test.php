@@ -1,6 +1,6 @@
 <?php
 
-require "HorizontalTable.php";
+include_once "HorizontalTable.php";
 
 use PHPUnit\Framework\TestCase;
 
