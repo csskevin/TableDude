@@ -111,6 +111,32 @@ class VerticalTableTest extends TestCase
         $groupedTable = $verticalTable->getGroupedTable();
         $this->assertEquals($expected, $groupedTable);
     }
+
+    public function testGetHeader()
+    {
+        $array = array(
+            array(
+                "Header1",
+                "Value1",
+                "Value2"
+            ),
+            array(
+                "Header2",
+                "Value11",
+                "Value22"
+            ),
+            array(
+                "Header3",
+                "Value111",
+                "Value222"
+            )
+        );
+        $expected = array("Header1", "Header2", "Header3");
+        $verticalTable = new \TableDude\Converter\VerticalTable($array);
+        $verticalTable->setHeaderColumnIndex(0);
+        $header = $verticalTable->getHeader();
+        $this->assertEquals($expected, $header);
+    }
 }
 
 ?>

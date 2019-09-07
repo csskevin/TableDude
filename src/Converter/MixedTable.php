@@ -105,6 +105,15 @@ class MixedTable
         array_splice($header, $realVerticalIndex, 1);
         return $header;
     }
+    public function getCrossedCellAsArray($table)
+    {
+        $realHorizontalIndex = \TableDude\Tools\ArrayTool::getRealIndexFromHorizontalTable($table, $this->headerRowIndex);
+        $realVerticalIndex = \TableDude\Tools\ArrayTool::getRealIndexFromVerticalTable($table, $this->headerColumnIndex);
+
+        $header = array_slice($table, $realHorizontalIndex, 1)[0];
+        $cell = array_slice($header, $realVerticalIndex, 1);
+        return $cell;
+    }
 
     public function getHorizontalHeaderWithoutVerticalCrossedCell($table)
     {

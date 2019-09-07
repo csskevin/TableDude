@@ -37,6 +37,14 @@ class VerticalTable
         $horizontalTable->setHeaderRowIndex($this->headerColumnIndex);
         return $horizontalTable->getGroupedTable();
     }
+
+    public function getHeader()
+    {
+        $swappedArray = \TableDude\Tools\ArrayTool::swapArray($this->table);
+        $horizontalTable = new \TableDude\Converter\HorizontalTable($swappedArray);
+        $horizontalTable->setHeaderRowIndex($this->headerColumnIndex);
+        return $horizontalTable->getHeader();
+    }
 }
 
 ?>

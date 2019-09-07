@@ -198,6 +198,27 @@ class MixedTableTest extends TestCase
         );
         $this->assertEquals($groupedTable4, $expected4);
     }
+
+    public function testGetCrossedCellAsArray()
+    {
+        $mt = new \TableDude\Converter\MixedTable(array());
+        $array = array(
+            array("H1", "H2", "H3"),
+            array("V1", "V2", "V3"),
+            array("V2", "V3", "V4")
+        );
+        $mt->setHeaderRowIndex(0);
+        $mt->setHeaderColumnIndex(0);
+        $expected1 = array("H1");
+        $cell1 = $mt->getCrossedCellAsArray($array);
+        $this->assertEquals($expected1, $cell1);
+
+        $mt->setHeaderRowIndex(-1);
+        $mt->setHeaderColumnIndex(-2);
+        $expected2 = array("V3");
+        $cell2 = $mt->getCrossedCellAsArray($array);
+        $this->assertEquals($expected2, $cell2);
+    }
 }
 
 ?>
