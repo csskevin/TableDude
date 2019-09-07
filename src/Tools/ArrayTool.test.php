@@ -129,12 +129,12 @@ class ArrayToolTest extends TestCase
 
         try {
             $realIndexThrowError = \TableDude\Tools\ArrayTool::getRealIndexFromHorizontalTable($table, -5);
+            $this->fail("Out of range exception was not raised");
         } catch(\TableDude\Exceptions\ArrayToolException $e)
         {
             $this->assertTrue(true);
-            return;
         }
-        $this->fail("Out of range exception was not raised");
+        
     }
 
     public function testGetRealIndexFromVerticalTable()
