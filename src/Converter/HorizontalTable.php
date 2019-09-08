@@ -1,6 +1,7 @@
 <?php
 
 namespace TableDude\Converter;
+include_once __DIR__ . "/../Analysis/HeaderAnalyzation.php";
 include_once __DIR__ . "/../Exceptions/HorizontalTableException.php";
 include_once __DIR__ . "/../Tools/ArrayTool.php";
 
@@ -32,6 +33,7 @@ class HorizontalTable
 
     public function getGroupedTable()
     {
+        if(!\TableDude\Tools\ArrayTool::validateHorizontalTable($this->table)) { return array(); }
         $groupedTable = array();
         $this->trimTableToHeaderLength();
         $header = $this->getHeader();
@@ -97,6 +99,12 @@ class HorizontalTable
         $extendedHeader = array_merge($header, $extend);
         $realIndex = \TableDude\Tools\ArrayTool::getRealIndexFromHorizontalTable($this->table, $this->headerRowIndex);
         $this->table[$realIndex] = $extendedHeader;
+    }
+
+    public function getFingerprint()
+    {
+        $fingerPrintArray = $this->getHeader();
+        return \TableDude\Analysis\HeaderAnalyzation::getFingerPrintOfArray($fingerPrintArray);
     }
 }
 

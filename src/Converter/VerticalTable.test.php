@@ -137,6 +137,17 @@ class VerticalTableTest extends TestCase
         $header = $verticalTable->getHeader();
         $this->assertEquals($expected, $header);
     }
+
+    public function testGetFingerprint()
+    {
+        $table = array(
+            array("Value1", "Value2", "Value3"),
+            array("Header1", "Header2"),
+            array("Value3", "Value4", "Value7")
+        );
+        $verticalTable = new TableDude\Converter\VerticalTable($table);
+        $this->assertIsInt($verticalTable->getFingerprint());
+    }
 }
 
 ?>

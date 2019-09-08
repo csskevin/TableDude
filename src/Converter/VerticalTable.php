@@ -1,6 +1,7 @@
 <?php
 
 namespace TableDude\Converter;
+include_once __DIR__ . "/../Analysis/HeaderAnalyzation.php";
 include_once __DIR__ . "/../Exceptions/VerticalTableException.php";
 include_once __DIR__."/HorizontalTable.php";
 include_once __DIR__ . "/../Tools/ArrayTool.php";
@@ -32,6 +33,7 @@ class VerticalTable
     
     public function getGroupedTable()
     {
+        if(!\TableDude\Tools\ArrayTool::validateVerticalTable($this->table)) { return array(); }
         $swappedArray = \TableDude\Tools\ArrayTool::swapArray($this->table);
         $horizontalTable = new \TableDude\Converter\HorizontalTable($swappedArray);
         $horizontalTable->setHeaderRowIndex($this->headerColumnIndex);
@@ -44,6 +46,12 @@ class VerticalTable
         $horizontalTable = new \TableDude\Converter\HorizontalTable($swappedArray);
         $horizontalTable->setHeaderRowIndex($this->headerColumnIndex);
         return $horizontalTable->getHeader();
+    }
+
+    public function getFingerprint()
+    {
+        $fingerPrintArray = $this->getHeader();
+        return \TableDude\Analysis\HeaderAnalyzation::getFingerPrintOfArray($fingerPrintArray);
     }
 }
 

@@ -219,6 +219,18 @@ class MixedTableTest extends TestCase
         $cell2 = $mt->getCrossedCellAsArray($array);
         $this->assertEquals($expected2, $cell2);
     }
+
+    public function testGetFingerprint()
+    {
+        $table = array(
+            array("Value1", "Value2", "Value3"),
+            array("Header1", "Header2"),
+            array("Value3", "Value4", "Value7")
+        );
+        $mixedTable = new TableDude\Converter\MixedTable($table);
+        $this->assertIsInt($mixedTable->getFingerprint());
+        $this->assertFalse($mixedTable->getFingerprint("123"));        
+    }
 }
 
 ?>

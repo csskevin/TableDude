@@ -2,15 +2,25 @@
 
 namespace TableDude\Converter;
 
+include_once __DIR__ . "/../Analysis/HeaderAnalyzation.php";
 include_once __DIR__ . "/../Exceptions/MixedTableException.php";
 include_once __DIR__ . "/../Tools/ArrayTool.php";
 include_once __DIR__ . "/HorizontalTable.php";
 
+define("TD_FINGERPRINT_VERTICAL_HEADER", 1000);
+define("TD_FINGERPRINT_HORIZONTAL_HEADER", 1001);
+define("TD_FINGERPRINT_MIXED_HEADER", 1002);
+
+define("TD_FINGERPRINT_VERTICAL_HEADER_WITH_CROSSED_CELL", 1003);
+define("TD_FINGERPRINT_HORIZONTAL_HEADER_WITH_CROSSED_CELL", 1004);
+define("TD_FINGERPRINT_MIXED_HEADER_WITH_CROSSED_CELL", 1005);
+
+
 class MixedTable
 {
     private $table;
-    private $headerColumnIndex;
-    private $headerRowIndex;
+    private $headerColumnIndex = 0;
+    private $headerRowIndex = 0;
     private $horizontalContainsVerticalTable = true;
     
     public function __construct($table)
@@ -21,6 +31,60 @@ class MixedTable
         } else {
             throw new TableDude\Exceptions\MixedTableException("Table does not match type Array!");
         }
+    }
+
+    public function getFingerprint($type = TD_FINGERPRINT_MIXED_HEADER_WITH_CROSSED_CELL)
+    {
+        $fingerPrintArray = false;
+        if($type === TD_FINGERPRINT_VERTICAL_HEADER)
+        {
+            $fingerPrintArray = array(
+                $this->getVerticalHeaderWithoutHorizontalCrossedCell($this->table)
+            );
+        }
+        if($type === TD_FINGERPRINT_HORIZONTAL_HEADER)
+        {
+            $fingerPrintArray = array(
+                $this->getHorizontalHeaderWithoutVerticalCrossedCell($this->table)
+            );
+        }
+        if($type === TD_FINGERPRINT_MIXED_HEADER)
+        {
+            $fingerPrintArray = array(
+                $this->getVerticalHeaderWithoutHorizontalCrossedCell($this->table),
+                $this->getHorizontalHeaderWithoutVerticalCrossedCell($this->table)
+            );
+        }
+
+        if($type === TD_FINGERPRINT_VERTICAL_HEADER_WITH_CROSSED_CELL)
+        {
+            $fingerPrintArray = array(
+                $this->getVerticalHeaderWithoutHorizontalCrossedCell($this->table),
+                $this->getCrossedCellAsArray($this->table)
+            );
+        }
+        if($type === TD_FINGERPRINT_HORIZONTAL_HEADER_WITH_CROSSED_CELL)
+        {
+            $fingerPrintArray = array(
+                $this->getHorizontalHeaderWithoutVerticalCrossedCell($this->table),
+                $this->getCrossedCellAsArray($this->table)
+
+            );
+        }
+        if($type === TD_FINGERPRINT_MIXED_HEADER_WITH_CROSSED_CELL)
+        {
+            $fingerPrintArray = array(
+                $this->getVerticalHeaderWithoutHorizontalCrossedCell($this->table),
+                $this->getHorizontalHeaderWithoutVerticalCrossedCell($this->table),
+                $this->getCrossedCellAsArray($this->table)
+            );
+        }
+        
+        if($fingerPrintArray)
+        {
+            return \TableDude\Analysis\HeaderAnalyzation::getFingerPrintOfArray($fingerPrintArray);
+        }
+        return false;
     }
 
     public function getTable()
@@ -51,6 +115,7 @@ class MixedTable
     public function getGroupedTable()
     {
         $table = $this->table;
+        if(!\TableDude\Tools\ArrayTool::validateMixedTable($table)) { return array(); }
         if($this->horizontalContainsVerticalTable === false)
         {
             $table = \TableDude\Tools\ArrayTool::swapArray($table);
@@ -71,7 +136,10 @@ class MixedTable
             $instance->setHeaderRowIndex(0);
             $entries = $instance->getGroupedTable();
             $entry = $entries[0];
-            $groupedTables[$headerRow[$i]] = $entry;
+            if(count($headerRow) > $i)
+            {
+                $groupedTables[$headerRow[$i]] = $entry;
+            }
         }
         return $groupedTables;
     }

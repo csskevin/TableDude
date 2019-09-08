@@ -190,6 +190,17 @@ class HorizontalTableTest extends TestCase
         $header3 = $horizontalTable3->getHeader();
         $this->assertEquals($header3, array("Value3", "Value4", "Value7", "Header3", "Header4"));
     }
+
+    public function testGetFingerprint()
+    {
+        $table = array(
+            array("Value1", "Value2", "Value3"),
+            array("Header1", "Header2"),
+            array("Value3", "Value4", "Value7")
+        );
+        $horizontalTable = new TableDude\Converter\HorizontalTable($table);
+        $this->assertIsInt($horizontalTable->getFingerprint());
+    }
 }
 
 ?>
