@@ -16,5 +16,10 @@
     },
     "scripts": {
         "test": "phpunit ./src/Converter && phpunit ./src/Parser && phpunit ./src/Tools && phpunit ./src/Analysis"
+    },
+    "autoload": {
+        "files": [
+            "./src/autoload.php"
+        ]
     }
 }
