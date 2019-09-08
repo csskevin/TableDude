@@ -13,5 +13,8 @@
     "require": {},
     "require-dev": {
         "phpunit/phpunit": "^8.4@dev"
+    },
+    "scripts": {
+        "test": "phpunit ./src/Converter && phpunit ./src/Parser && phpunit ./src/Tools && phpunit ./src/Analysis"
     }
 }
