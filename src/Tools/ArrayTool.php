@@ -61,6 +61,42 @@ class ArrayTool
         $swappedTable = ArrayTool::swapArray($table);
         return ArrayTool::getRealIndexFromHorizontalTable($table, $index);
     }
+
+    public static function validateHorizontalTable($table)
+    {
+        if(!is_array($table)) { return false; }
+        if(count($table) <= 1) { return false; }
+
+        foreach($table as $item)
+        {
+            if(!is_array($item)) { return false; }
+            foreach($item as $value)
+            {
+                if(is_array($value) || is_object($value)) { return false; }
+            }
+        }
+        return true;
+    }
+
+    public static function validateVerticalTable($table)
+    {
+        if(!is_array($table)) { return false; }
+        return ArrayTool::validateHorizontalTable(ArrayTool::swapArray($table));
+    }
+
+    public static function validateMixedTable($table)
+    {
+        if(!is_array($table)) { return false; }
+        return ArrayTool::validateHorizontalTable($table) && ArrayTool::validateVerticalTable($table);
+    }
+
+    public static function sortArray(&$array)
+    {
+        foreach ($array as &$value) {
+            if (is_array($value)) ArrayTool::sortArray($value);
+         }
+         return sort($array);
+    }
 }
 
 ?>
