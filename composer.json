@@ -9,8 +9,8 @@
             "email": "saigerkevin4@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
-    "version": "v1.0.0-alpha",
+    "minimum-stability": "stable",
+    "version": "v1.0.0",
     "require": {
         "php": ">=7.3.0"
     },
