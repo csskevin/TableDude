@@ -99,10 +99,12 @@ This software was tested with PHPUnit. The `composer.json` includes a test scrip
 
 # Documentation
 
-There are two main components:
+There are four main components:
 
 - Parser (This parses HTML Tables to PHP Arrays)
 - Converter (Let's you convert and group PHP Arrays)
+- Analysis (Analyzes a table)
+- Tools (Some tools to modify the tables)
 
 ## Parser
 ### \TableDude\Parser\SimpleParser
@@ -385,3 +387,67 @@ $fingerprint = $mixedTable->getFingerprint();
 // This can be used to identify tables by the header for the next time
 
 ```
+
+## Tools
+
+### \TableDude\Tools\ArrayTool
+
+**public static function swapArray($array);**
+
+Swaps an array
+
+```php
+
+$array = array(
+    array("1", "2", "3"),
+    array("4", "5", "6")
+);
+
+$swappedArray = \TableDude\Tools\ArrayTool::swapArray($array);
+
+/*
+Content of $swappedArray
+array(
+    array("1", "4"),
+    array("2", "5"),
+    array("3", "6")
+)
+*/
+
+```
+
+**public static function countLongestRowOfArrayTable($array);**
+
+Returns the length of the longest row
+```php
+$array = array(
+    array("1", "2", "3"),
+    array("4", "5", "6", "7")
+);
+
+$longestRow = \TableDude\Tools\ArrayTool::countLongestRowOfArrayTable($array);
+
+/*
+$longestRow would be 4 in this case
+*/
+```
+
+**public static function validateVerticalTable($table);**
+
+Validates, wheter a vertical table is valid.
+
+**public static function validateHorizontalTable($table);**
+
+Validates, wheter a horizontal table is valid.
+
+**public static function validateMixedTable($table);**
+
+Validates, wheter a mixed table is valid.
+
+## Analysis
+
+### \TableDude\Analysis\HeaderAnalyzation
+
+**public static function getFingerPrintOfArray($array)**
+
+Returns a fingerprint of the array. This is very useful for identifying tables by the header.
