@@ -4,7 +4,7 @@ TableDude parses, converts and analyses HTML Tables. This software is written in
 
 ## Compatibility
 
-You can use this software for `PHP version >= 7.3`
+You can use this software for `PHP version >= 7`
 
 It might work with older versions, but I haven't tested it.
 
